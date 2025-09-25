@@ -12,6 +12,9 @@ const app = express();
 const allowedOrigins = [
   "https://fe-be-project-1-git-main-jeslys-projects-fb6c4fc3.vercel.app",
 ];
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'Server is running' });
+});
 
 app.use(cors({
   origin: function (origin, callback) {
