@@ -9,7 +9,11 @@ import { errorHandler } from './middlewares/errorHandler.js';
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://fe-be-project-1-git-main-jeslys-projects-fb6c4fc3.vercel.app", 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
 app.use(express.json());
 //main routes
 app.use('/api/auth', authRoutes);
