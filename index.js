@@ -9,29 +9,22 @@ import { errorHandler } from './middlewares/errorHandler.js';
 dotenv.config();
 const app = express();
 
-const allowedOrigins = [
-  "https://fe-be-project-1-git-main-jeslys-projects-fb6c4fc3.vercel.app",
-];
+app.use(cors({
+  origin: '*',
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
+
+app.use(express.json());
+
+// Health check
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-}));
-
-app.use(express.json());
-//main routes
+// Main routes
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+
 
 app.use(errorHandler);
 
